@@ -26,8 +26,8 @@ RUN pip install pipenv
 
 WORKDIR /home/app/
 
-COPY Pipfile
-COPY Pipfile.lock
+COPY function/Pipfile
+COPY function/Pipfile.lock
 RUN PIPENV_VENV_IN_PROJECT=1 pipenv install --python=${PYTHON_VERSION} --deploy
 
 
