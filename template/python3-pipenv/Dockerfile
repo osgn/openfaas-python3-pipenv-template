@@ -10,7 +10,7 @@ ENV LC_ALL C.UTF-8
 ENV PYTHONDONTWRITEBYTECODE 0 # ensure pyc files are used for performance
 ENV PYTHONFAULTHANDLER 0 # disable Python tracebacks on segfault
 
-RUN apk update && apk upgrade -y
+RUN apk update && apk upgrade
 
 # Allows you to add additional packages via build-arg
 ARG ADDITIONAL_PACKAGE
@@ -20,14 +20,13 @@ RUN apk --no-cache add ca-certificates ${ADDITIONAL_PACKAGE}
 FROM base AS depbuilder
 
 
-RUN apk add -y --no-install-recommends gcc
-RUN pip install --upgrade pip
+RUN apk add gcc
 RUN pip install pipenv
 
 WORKDIR /home/app/
 
-COPY function/Pipfile
-COPY function/Pipfile.lock
+COPY function/Pipfile /home/app
+COPY function/Pipfile.lock /home/app
 RUN PIPENV_VENV_IN_PROJECT=1 pipenv install --python=${PYTHON_VERSION} --deploy
 
 
@@ -37,9 +36,9 @@ COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
 RUN chmod +x /usr/bin/fwatchdog
 
 WORKDIR /home/app/
-COPY index.py
-COPY function
-COPY --from=python-depbuilder /home/app/.venv
+COPY index.py index.py
+COPY function function
+COPY --from=depbuilder /home/app/.venv /home/app/.venv
 
 # Add non root user
 RUN addgroup -S app && adduser app -S -G app
