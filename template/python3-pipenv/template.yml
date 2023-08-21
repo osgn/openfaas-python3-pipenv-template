@@ -16,6 +16,9 @@ build_options:
     packages: 
       - mysql-client
       - mysql-dev
+  - name: firefox
+    packages:
+      - firefox-esr
   - name: pillow
     packages: 
       - jpeg-dev
