@@ -19,7 +19,6 @@ RUN apk --no-cache add ca-certificates ${ADDITIONAL_PACKAGE}
 
 FROM base AS depbuilder
 
-
 RUN apk add gcc
 RUN pip install pipenv
 
@@ -44,19 +43,15 @@ COPY function function
 COPY --from=depbuilder /home/app/.venv /home/app/.venv
 
 # Add non root user
-RUN addgroup -S app && adduser app -S -G app
+RUN addgroup -S app && adduser app -S -G app --uid 12000
 RUN chown -R app /home/app
-
-USER root
-
-# Allow any user-id for OpenShift users.
-RUN chown -R app:app ./ && \
-  chmod -R 777 /home/app/.venv
 
 USER app
 
 ENV PATH="/home/app/.venv/bin:$PATH"
 ENV PYTHONPATH=$PYTHONPATH:/home/app/.venv
+ARG PYTHON_BOOTSTRAP
+RUN python3 -c "${PYTHON_BOOTSTRAP}"
 
 ENV fprocess="python3 index.py"
 EXPOSE 8080
