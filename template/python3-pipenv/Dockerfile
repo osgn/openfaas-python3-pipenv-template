@@ -44,7 +44,7 @@ COPY --from=depbuilder /home/app/.venv /home/app/.venv
 
 # Add non root user
 RUN addgroup -S app && adduser app -S -G app --uid 12000
-RUN chown -R app /home/app
+RUN chown -R app:app /home/app
 
 USER app
 
