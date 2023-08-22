@@ -44,7 +44,7 @@ Add to your function YML if applicable
 ### Setup a label pointing to the source repo for container registry:
 
 ```yaml
-  SOURCE_REPO: https://github.com/apairmont/tester
+  REPO_URL: https://github.com/apairmont/tester
 ```
 
 ### Perform some bootstrapping tasks in python:

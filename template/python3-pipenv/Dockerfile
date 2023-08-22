@@ -31,8 +31,8 @@ RUN PIPENV_VENV_IN_PROJECT=1 pipenv install --python=${PYTHON_VERSION} --deploy
 
 FROM base AS runtime
 
-ARG SOURCE_REPO
-LABEL org.opencontainers.image.source ${SOURCE_REPO}
+ARG REPO_URL
+LABEL org.opencontainers.image.source ${REPO_URL}
 
 COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
 RUN chmod +x /usr/bin/fwatchdog
