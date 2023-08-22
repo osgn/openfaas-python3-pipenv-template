@@ -1,7 +1,7 @@
-OpenFaaS Python Pipenv Template
+OpenFaaS Python3 Pipenv Template
 =============================================
 
-This template is for creating python3 based OpenFaas functions with a pipenv environment instead
+This template is for creating python3 based OpenFaas functions with pipenv instead
 of requirements.txt.  It runs the function as a non-root user and has some hooks
 for prepping the python environment.
 
@@ -25,7 +25,7 @@ faas-cli new --lang python3-pipenv $FN
 ( cd $FN && pipenv sync )
 ```
 
-### Build the function
+### Build, push, and deploy the function
 
 ```bash
 faas-cli up -f $FN.yml
